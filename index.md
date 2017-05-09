@@ -1,9 +1,9 @@
-　　---
-　　title: 我的Blog
-　　layout: default
-　　---
+---
+title: 我的Blog
+layout: default
+---
 
-## {{page.title}}
+## {{ page.title }}
 
 最新文章
 
