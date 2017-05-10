@@ -1,6 +1,7 @@
 ---
 title: 使用veen图理解precious、recall和F1
 permalinks: f1.html
+layout: post
 ---
 
 # 使用Venn图理解precision、recall和F1
