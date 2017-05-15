@@ -1,0 +1,156 @@
+---
+layout: post
+title: leetcode 303
+---
+
+# leetcode 303. Range Sum Query - Immutable
+
+Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+
+Example:
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+Note:
+You may assume that the array does not change.
+There are many calls to sumRange function.
+```
+
+class NumArray(object):
+
+    def __init__(self, nums):
+        """
+        :type nums: List[int]
+        """
+        self._cache = {}
+        for i, num_i in enumerate(nums):
+            for j, num_j in enumerate(nums[i:], start=i):
+                if j > i:
+                    self._cache[i, j] = self._cache[i, j-1]+num_j
+                else:
+                    self._cache[i, j] = num_i
+        
+
+    def sumRange(self, i, j):
+        """
+        :type i: int
+        :type j: int
+        :rtype: int
+        """
+        return self._cache.get((i, j))
+
+```
+
+```
+# 全部缓存起来，__init__时间复杂度O(n^2)，sumRange时间复杂度O(1)，空间复杂度O(n^2)
+# 最后一个测试用例TLE，不过后来看解答，java是可以通过的，果然python太慢了
+# 尝试优化了一下常数因子，还是超时
+class NumArray(object):
+
+
+    def __init__(self, nums):
+        """
+        :type nums: List[int]
+        """
+        self._cache = {}
+        for i in range(len(nums)):
+            sum_ = 0
+            for j, num_j in enumerate(nums[i:], start=i):
+                sum_ += num_j
+                self._cache[i, j] = sum_
+                
+        
+
+    def sumRange(self, i, j):
+        """
+        :type i: int
+        :type j: int
+        :rtype: int
+        """
+        return self._cache.get((i, j))
+
+```
+
+摘了眼镜想了一会儿....
+```
+
+class NumArray(object):
+
+    def __init__(self, nums):
+        """
+        :type nums: List[int]
+        """
+        self._cache = [0]
+        sum_ = 0
+        for num in nums:
+            sum_ += num
+            self._cache.append(sum_)
+
+                
+    def sumRange(self, i, j):
+        """
+        :type i: int
+        :type j: int
+        :rtype: int
+        """
+        if j >= i:
+            return self._cache[j+1] - self._cache[i]
+
+```
+
+![result](![](https://m-lh.github.io/blog/assets/images/leetcode303.png))
+
+附录：
+测试了几个执行时间
+
+1.`enumerate`的性能
+`enumerate`虽然是python中的语法糖，但是效率还是有提升的
+```
+def fun1():
+    l = [1] *100000
+    sum_ = 0
+    for i, n in enumerate(l):
+        sum_+=i
+
+def fun2():
+    l = [1] *100000
+    sum_ = 0
+    i = 0
+    for n in l:
+        i+=1
+        sum_+=i
+
+>>> import timeit
+
+>>> timeit.timeit(fun1, number=100)
+2.8034541127916572
+>>> timeit.timeit(fun2, number=100)
+3.4534265395515202
+
+```
+
+2.列表查找的性能不错，我以前以为list是链表实现，看来错了
+```
+import array
+
+l = [1] *10000000
+d = {i:k for i,k in enumerate(l)}
+a = array.array('l',l)
+
+def fun3(query):
+    for i in range(1000000):
+        query[i]
+
+def fun4(q):
+    return lambda : fun3(q)
+
+>>> import timeit
+>>> timeit.timeit(fun4(l), number=10)
+1.7437823369792045
+>>> timeit.timeit(fun4(d), number=10)
+2.2826954997461613
+>>> timeit.timeit(fun4(a), number=10)
+1.6066058094011755
+```
