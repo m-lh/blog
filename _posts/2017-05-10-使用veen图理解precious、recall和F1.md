@@ -3,6 +3,7 @@ title: 使用veen图理解precious、recall和F1
 permalinks: f1.html
 layout: post
 ---
+![wiki的珍贵的回忆](https://m-lh.github.io/blog/assets/images/wiki的珍贵的回忆.png)
 
 # 使用Venn图理解precision、recall和F1
 
