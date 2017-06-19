@@ -35,3 +35,12 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+
+## 快速开始
+
+如果需要在一个新环境下继续写博客，需要的步骤
+
+1.安装git-scm
+2.clone这个项目
+3.在posts目录添加博客

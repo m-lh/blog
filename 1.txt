@@ -1,0 +1,5 @@
+
+如果想要使用jupyter notebook生成ppt，可以使用下面的命令安装
+conda install -c damianavila82 rise
+
+但是我记得以前似乎ubuntu上的ipy有按钮可以直接生成ppt，现在找不到了，真是伤心
