@@ -1,6 +1,12 @@
-对于ubuntu的虚机使用upstart时会报错：Start: Unable To Connect To Upstart: Failed To Connect To Socket /Com/Ubuntu/Upstart: Connection Refused
+http://blog.csdn.net/quqi99/article/details/45100933
+
+对于ubuntu的虚机使用upstart时会报错：
+
+> Start: Unable To Connect To Upstart: Failed To Connect To Socket /Com/Ubuntu/Upstart: Connection Refused
 
 workaround如下：
 
+```bash
 sudo dpkg-divert --local --rename --add /sbin/initctl
 ln -s /bin/true /sbin/initctl
+```
